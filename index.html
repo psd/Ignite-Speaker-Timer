@@ -1,0 +1,92 @@
+<!doctype html>
+<html>
+<head>
+	<title>Ignite Speaker Timer</title>
+	<!--
+		Timer for Ignite style lighning talks
+
+		5 minutes, 20 slides, auto-advancing every 15 seconds
+
+		Click to start/stop/restart the timer
+
+		https://github.com/psd/Ignite-Speaker-Timer
+
+		Released under The MIT licence
+		http://www.opensource.org/licenses/mit-license.php
+	-->
+	<style>
+	body {
+		background-color: white;
+		background-color: black;
+		font-family: helvetica, sans-serif;
+		margin:0;
+		padding:0;
+	}
+
+	#clock {
+		background-color: black;
+		cursor: none;
+		color: white;
+		font-size: 12em;
+		font-weight: bold;
+		margin: 0.5em auto;
+		text-align: center;
+		width: 100%;
+	}
+
+	.slide {
+		padding-top: 0.1em;
+	}
+
+	.off {
+		color: black;
+	}
+	</style>
+</head>
+<body>
+	<div id="clock">
+		<div><span id="mins">5</span>:<span id="secs">00</span></div>
+		<div id="slide">00</div>
+	</div>
+</body>
+<script type="text/javascript" src="jquery.min.js"></script>
+<script>
+(function() {
+	var timer;
+	var elapsed = 0;
+
+	$('body').bind('click', function() {
+		clearInterval(timer);
+		$('#clock').removeClass('off').css('cursor', 'none');
+		if (!elapsed) {
+			elapsed = 300;
+			timer = setInterval(tick, 1000);
+		} else {
+			clearInterval(timer);
+			elapsed = 0;
+
+			$('#mins').text("5");
+			$('#secs').text("00");
+			$('#slide').text("00");
+		}
+	});
+
+	function flash() {
+		$('#clock').toggleClass('off');
+	}
+	
+	function tick() {
+		elapsed -= 1;
+		if (elapsed <= 0) {
+			clearInterval(timer);
+			timer = setInterval(flash, 1000);
+		}
+
+		$('#mins').text(Math.floor(elapsed / 60));
+		var s = "0" + Math.floor(elapsed % 60);
+		$('#secs').text(s.slice(-2));
+		$('#slide').text(Math.floor(elapsed % 15));
+	}
+})();
+</script>
+</html>
