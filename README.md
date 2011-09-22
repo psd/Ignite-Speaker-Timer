@@ -2,9 +2,9 @@ A simple JavaScript speaker timer for [Ignite](http://igniteshow.com/) style tal
 
 5 minutes, 20 slides, 15 seconds per-slide
 
-*Project the timer on a wall
-*Click the page to start when the speaker starts
-*Click on the page to stop and reset the timer
+* Project the timer on a wall
+* Click the page to start when the speaker starts
+* Click on the page to stop and reset the timer
 
 https://github.com/psd/Ignite-Speaker-Timer
 
