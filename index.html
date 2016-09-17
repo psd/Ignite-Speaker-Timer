@@ -16,38 +16,62 @@
 	-->
 	<style>
 	body {
-		background-color: white;
 		background-color: black;
 		font-family: helvetica, sans-serif;
+		color: white;
 		margin:0;
 		padding:0;
+		cursor: crosshair;
+		font-family: Tahoma, Verdana;
+		overflow: hidden;
 	}
-
-	#clock {
-		background-color: black;
-		cursor: none;
-		color: white;
-		font-size: 12em;
-		font-weight: bold;
-		margin: 0.5em auto;
-		text-align: center;
+	table {
 		width: 100%;
 	}
-
-	.slide {
-		padding-top: 0.1em;
+	.timer {
+		font-size: 12em;
+		font-weight: bold;
+		text-align: left;
 	}
-
-	.off {
-		color: black;
+	.label {
+		width: 300px;
+		font-size: 4em;
+		display: inline;
+		float: left;
+		color: #999;
+	}
+	.status {
+		font-size: 2em;
+		font-weight: bold;
+		position: absolute;
+		top:5px;
+		right:80px;
+		color: red;
+	}
+	.status:before {
+		content: "NOT RUNNING";
+	}
+	.status.on {
+		color: green;
+	}
+	.status.on:before {
+		content: "RUNNING";
 	}
 	</style>
 </head>
 <body>
-	<div id="clock">
-		<div><span id="mins">5</span>:<span id="secs">00</span></div>
-		<div id="slide">00</div>
-	</div>
+	<div class="status"></div>
+	<table cellpadding="0" cellspacing="0">
+		<tr>
+				<td class='label'>Timer</td><td class='timer'><span id="mins">5</span>:<span id="secs">00</span></td>
+		</tr>
+		<tr>
+				<td class='label'>Slide Countdown</td><td class='timer'><span id="slide">00</span></td>
+		</tr>
+		<tr>
+				<td class='label'>Slide #</td><td class='timer'><span id="slide-num">1</span></td>
+		</tr>
+	</table>
 </body>
 <script type="text/javascript" src="jquery.min.js"></script>
 <script>
@@ -57,7 +81,7 @@
 
 	$('body').bind('click', function() {
 		clearInterval(timer);
-		$('#clock').removeClass('off').css('cursor', 'none');
+		$('.status').toggleClass('on');
 		if (!elapsed) {
 			elapsed = 300;
 			timer = setInterval(tick, 1000);
@@ -68,6 +92,7 @@
 			$('#mins').text("5");
 			$('#secs').text("00");
 			$('#slide').text("00");
+			$('#slide-num').text("1");
 		}
 	});
 
@@ -86,6 +111,7 @@
 		var s = "0" + Math.floor(elapsed % 60);
 		$('#secs').text(s.slice(-2));
 		$('#slide').text(Math.floor(elapsed % 15));
+		$('#slide-num').text( Math.abs(Math.floor(elapsed / 15) - 20) );
 	}
 })();
 </script>
